@@ -10,8 +10,7 @@ public class Tipo {
     @Column(length = 50)
     private String nome;
 
-    @OneToMany
-    @JoinColumn(name="objetos")
+    @OneToMany(mappedBy = "tipo" )
     private Set<Objeto> objetos;
 
     public Tipo(String nome) {

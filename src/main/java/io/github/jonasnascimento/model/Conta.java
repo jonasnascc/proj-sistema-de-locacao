@@ -64,17 +64,6 @@ public class Conta {
         this.descricao = descricao;
     }
 
-    public Locatario getLocatario() {
-        return locatario;
-    }
-
-    public void setLocatario(Locatario locatario) {
-        this.locatario = locatario;
-    }
-
-    public Locador getLocador() {
-        return locador;
-    }
 
     public void setLocador(Locador locador) {
         this.locador = locador;
@@ -86,5 +75,18 @@ public class Conta {
 
     public void setEfetuado_flag(boolean efetuado_flag) {
         this.efetuado_flag = efetuado_flag;
+    }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "id=" + id +
+                ", valor=" + valor +
+                ", data=" + data +
+                ", descricao='" + descricao + '\'' +
+                ", locatario=" + locatario +
+                ", locador=" + locador +
+                ", efetuado_flag=" + efetuado_flag +
+                '}';
     }
 }

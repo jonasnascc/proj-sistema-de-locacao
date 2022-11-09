@@ -16,15 +16,15 @@ public class Objeto {
     @Column(length = 250)
     private String caracteristicas;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="tipo")
     private Tipo tipo;
 
-    @OneToOne
-    @JoinColumn(name = "dono_id")
+    @ManyToOne
+    @JoinColumn(name = "dono")
     private Locatario dono;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="locador_id")
     private Locador locador;
 

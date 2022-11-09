@@ -1,18 +1,29 @@
 package io.github.jonasnascimento.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "locador")
-public class Locador extends Pessoa {
-    @OneToMany(targetEntity = Conta.class)
-    @JoinTable(name="locador_contas")
-    private Set<Conta> contas;
+public class Locador{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-    @OneToMany(targetEntity = Objeto.class)
-    @JoinTable(name="locador_objetos_alugados")
-    private Set<Conta> objetos_alugados;
+    @Column(nullable = false, length = 50)
+    protected String nome;
+
+    @Column(nullable = false, length = 14)
+    protected String cpf;
+
+    @Column(nullable = false, length = 14)
+    protected String telefone;
+
+    @OneToMany(mappedBy = "locador")
+    private List<Conta> contas;
+
+    @OneToMany(mappedBy = "locador")
+    private List<Objeto> objetosAlugados;
 
     public Locador(){}
 
@@ -29,6 +40,21 @@ public class Locador extends Pessoa {
     public void setId(Integer id) {
         this.id = id;
     }
+    public List<Conta> getContas() {
+        return contas;
+    }
+
+    public void setContas(List<Conta> dividas) {
+        this.contas = dividas;
+    }
+
+    public List<Objeto> getObjetosAlugados() {
+        return objetosAlugados;
+    }
+
+    public void setObjetosAlugados(List<Objeto> objetos_alugados) {
+        this.objetosAlugados = objetos_alugados;
+    }
 
     public String getNome() {
         return nome;
@@ -36,6 +62,14 @@ public class Locador extends Pessoa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getTelefone() {
@@ -46,19 +80,14 @@ public class Locador extends Pessoa {
         this.telefone = telefone;
     }
 
-    public Set<Conta> getContas() {
-        return contas;
-    }
-
-    public void setContas(Set<Conta> dividas) {
-        this.contas = dividas;
-    }
-
-    public Set<Conta> getObjetos_alugados() {
-        return objetos_alugados;
-    }
-
-    public void setObjetos_alugados(Set<Conta> objetos_alugados) {
-        this.objetos_alugados = objetos_alugados;
+    @Override
+    public String toString() {
+        return "Locador{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", objetos_alugados=" + objetosAlugados +
+                '}';
     }
 }

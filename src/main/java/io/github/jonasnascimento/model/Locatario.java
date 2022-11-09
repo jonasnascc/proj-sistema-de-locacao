@@ -6,13 +6,24 @@ import java.util.Set;
 
 @Entity
 @Table(name = "locatario")
-public class Locatario extends Pessoa{
-    @OneToMany(targetEntity = Objeto.class)
-    @JoinTable(name = "locatario_objetos")
+public class Locatario{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(nullable = false, length = 50)
+    protected String nome;
+
+    @Column(nullable = false, length = 14)
+    protected String cpf;
+
+    @Column(nullable = false, length = 14)
+    protected String telefone;
+
+    @OneToMany(mappedBy = "dono")
     private Set<Objeto> objetos;
 
-    @OneToMany(targetEntity = Conta.class)
-    @JoinTable(name="locatario_contas_emitidas")
+    @OneToMany(mappedBy = "locatario")
     private Set<Conta> contas_emitidas;
 
     public Locatario(){}
@@ -31,22 +42,6 @@ public class Locatario extends Pessoa{
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public Set<Objeto> getObjetos() {
         return objetos;
     }
@@ -61,5 +56,41 @@ public class Locatario extends Pessoa{
 
     public void setContas_emitidas(Set<Conta> contas_emitidas) {
         this.contas_emitidas = contas_emitidas;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    @Override
+    public String toString() {
+        return "Locatario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", objetos=" + objetos +
+                ", contas_emitidas=" + contas_emitidas +
+                '}';
     }
 }

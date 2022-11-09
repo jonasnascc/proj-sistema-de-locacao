@@ -1,5 +1,6 @@
-package io.github.jonasnascimento.repositorio;
+package io.github.jonasnascimento.repository;
 
+import io.github.jonasnascimento.model.Locador;
 import io.github.jonasnascimento.model.Objeto;
 import io.github.jonasnascimento.model.Tipo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,7 @@ public interface Objetos extends JpaRepository<Objeto,Integer> {
     @Query(value =  "select o from Objeto o where o.id = :id")
     Optional<Objeto> findById(Integer id);
 
+    List<Objeto> findByLocador(Locador locador);
 
 
     // @Query(value = "select c from Objeto c where c.descricao like :descricao")

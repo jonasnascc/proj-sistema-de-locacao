@@ -43,17 +43,19 @@ public class LocacaoApplication {
            corsa.setLocador(joao);
            corsa.setDono(pedro);
 
-           objetos.save(corsa);
 
            objetos.save(new Objeto(apartamento, "apartamento 212"));
            objetos.save(new Objeto(casa , "casa 87A"));
            objetos.save(new Objeto(livro, "Alice no país das maravilhas"));
 
 
+
+           objetos.save(corsa);
+
            Locador locador = locadores.findLocadorFetchObjetos(joao.getId());
 
+           objetos.findByLocador(joao).forEach(System.out::println);
 
-          //objetos.findByLocador(joao).forEach(System.out::println);
            System.out.println(locador.getObjetosAlugados());
 
 

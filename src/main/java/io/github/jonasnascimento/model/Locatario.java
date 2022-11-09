@@ -82,15 +82,4 @@ public class Locatario{
         this.telefone = telefone;
     }
 
-    @Override
-    public String toString() {
-        return "Locatario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", objetos=" + objetos +
-                ", contas_emitidas=" + contas_emitidas +
-                '}';
-    }
 }

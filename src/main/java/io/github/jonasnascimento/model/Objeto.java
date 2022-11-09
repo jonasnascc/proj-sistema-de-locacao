@@ -102,7 +102,6 @@ public class Objeto {
                 ", caracteristicas='" + caracteristicas + '\'' +
                 ", tipo=" + tipo +
                 ", dono=" + dono +
-                ", locador=" + locador +
                 ", locado_flag=" + locado_flag +
                 '}';
     }

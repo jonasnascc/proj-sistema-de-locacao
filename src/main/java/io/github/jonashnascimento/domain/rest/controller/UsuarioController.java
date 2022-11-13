@@ -26,13 +26,6 @@ public class UsuarioController {
         return usuarios.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuário não encontrado"));
     }
 
-    @PostMapping("/locadores")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Locador save(@RequestBody Locador locador){
-        return usuarios.save(locador);
-
-    }
-
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
@@ -42,15 +35,6 @@ public class UsuarioController {
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
-    @PutMapping("locadores/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Locador usuario){
-        usuarios.findById(id).map(usuarioExistente -> {
-            usuario.setId(usuarioExistente.getId());
-            usuarios.save(usuario);
-            return usuarioExistente;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-    }
 
     @GetMapping
     public List<Usuario> find(Locador filtroLocador, Locatario filtroLocatario){

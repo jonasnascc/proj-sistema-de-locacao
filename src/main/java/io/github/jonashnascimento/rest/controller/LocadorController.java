@@ -1,9 +1,8 @@
-package io.github.jonashnascimento.domain.rest.controller;
+package io.github.jonashnascimento.rest.controller;
 
 import io.github.jonashnascimento.domain.entity.Locador;
-import io.github.jonashnascimento.domain.entity.Locatario;
 import io.github.jonashnascimento.domain.entity.Usuario;
-import io.github.jonashnascimento.domain.repository.LocatarioRepository;
+import io.github.jonashnascimento.domain.repository.LocadorRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -13,47 +12,47 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios/locatarios")
-public class LocatarioController {
-    private LocatarioRepository locatarios;
+@RequestMapping("/api/usuarios/locadores")
+public class LocadorController {
+    private LocadorRepository locadores;
 
-    public LocatarioController(LocatarioRepository locatarios){
-        this.locatarios = locatarios;
+    public LocadorController(LocadorRepository locadores){
+        this.locadores = locadores;
     }
 
     @GetMapping("{id}")
     public Usuario getUsuarioById(@PathVariable("id") Integer id){
-        return locatarios.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuário não encontrado"));
+        return locadores.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuário não encontrado"));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Locatario save(@RequestBody Locatario locatario){
-        return locatarios.save(locatario);
+    public Locador save(@RequestBody  Locador locador){
+        return locadores.save(locador);
 
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-        locatarios.findById(id).map(usuario -> {
-            locatarios.delete(usuario);
-            return usuario;
+        locadores.findById(id).map(locador -> {
+            locadores.delete(locador);
+            return locador;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Locatario locatario){
-        locatarios.findById(id).map(locatarioExistente -> {
-            locatario.setId(locatarioExistente.getId());
-            locatarios.save(locatario);
-            return locatarioExistente;
+    public void update(@PathVariable Integer id, @RequestBody Locador locador){
+        locadores.findById(id).map(locadorExistente -> {
+            locadorExistente.setId(locadorExistente.getId());
+            locadores.save(locadorExistente);
+            return locadorExistente;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
     @GetMapping
-    public List<Locatario> find(Locatario filtro){
+    public List<Locador> find(Locador filtro){
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
@@ -62,6 +61,6 @@ public class LocatarioController {
         Example example = Example.of(filtro, matcher);
 
 
-        return locatarios.findAll(example);
+        return locadores.findAll(example);
     }
 }

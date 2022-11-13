@@ -1,4 +1,4 @@
-package io.github.jonashnascimento.domain.rest.controller;
+package io.github.jonashnascimento.rest.controller;
 
 import io.github.jonashnascimento.domain.entity.Locador;
 import io.github.jonashnascimento.domain.entity.Locatario;

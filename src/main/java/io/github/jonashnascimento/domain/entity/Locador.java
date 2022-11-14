@@ -9,10 +9,9 @@ import java.util.List;
 
 @Entity
 public class Locador extends Usuario{
-
     @JsonIgnore
     @OneToMany(mappedBy = "locador")
-    private List<Objeto> objetosAlugados;
+    private List<ObjetoLocado> objetosLocados;
 
     @JsonIgnore
     @OneToMany(mappedBy = "locador")
@@ -25,13 +24,6 @@ public class Locador extends Usuario{
         super(nome, cpf, telefone);
     }
 
-    public List<Objeto> getObjetosAlugados() {
-        return objetosAlugados;
-    }
-
-    public void setObjetosAlugados(List<Objeto> objetosAlugados) {
-        this.objetosAlugados = objetosAlugados;
-    }
 
     public List<Contrato> getContratos() {
         return contratos;

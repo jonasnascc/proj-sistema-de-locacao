@@ -21,12 +21,6 @@ public class Objeto {
     @ManyToOne
     private Locatario dono;
 
-    @ManyToOne
-    private Locador locador;
-
-    @Column
-    private boolean locadoFlag;
-
     public Objeto(){}
 
     public Objeto(String nome, Tipo tipo, Locatario dono) {
@@ -59,14 +53,6 @@ public class Objeto {
         this.caracteristicas = caracteristicas;
     }
 
-    public boolean isLocadoFlag() {
-        return locadoFlag;
-    }
-
-    public void setLocadoFlag(boolean locado) {
-        this.locadoFlag = locado;
-    }
-
     public Tipo getTipo() {
         return tipo;
     }
@@ -83,11 +69,5 @@ public class Objeto {
         this.dono = dono;
     }
 
-    public Locador getLocador() {
-        return locador;
-    }
 
-    public void setLocador(Locador locador) {
-        this.locador = locador;
-    }
 }

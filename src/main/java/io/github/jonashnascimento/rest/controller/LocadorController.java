@@ -11,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @RequestMapping("/api/usuarios/locadores")
 public class LocadorController {
@@ -26,14 +28,14 @@ public class LocadorController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Locador save(@RequestBody  Locador locador){
         return locadores.save(locador);
 
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable Integer id){
         locadores.findById(id).map(locador -> {
             locadores.delete(locador);
@@ -42,7 +44,7 @@ public class LocadorController {
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Locador locador){
         locadores.findById(id).map(locadorExistente -> {
             locadorExistente.setId(locadorExistente.getId());

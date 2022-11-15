@@ -16,4 +16,8 @@ public interface TipoRepository extends JpaRepository<Tipo, Integer> {
     @Query(value = "select t from Tipo t left join fetch t.objetos o where t.id =: id")
     Tipo findTipoFetchObjetos(@Param("id") Integer id);
 
+    Tipo searchByNome(String nome);
+
+
+
 }

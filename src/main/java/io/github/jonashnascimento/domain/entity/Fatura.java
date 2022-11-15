@@ -19,7 +19,7 @@ public class Fatura {
     @Column(nullable = false, updatable = false)
     private BigDecimal valor;
 
-    @Column(nullable = false)
+    @Column
     private Date data;
 
     @Column(nullable = false)

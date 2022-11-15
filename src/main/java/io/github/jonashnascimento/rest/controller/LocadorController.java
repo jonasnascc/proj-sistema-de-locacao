@@ -47,8 +47,8 @@ public class LocadorController {
     @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Locador locador){
         locadores.findById(id).map(locadorExistente -> {
-            locadorExistente.setId(locadorExistente.getId());
-            locadores.save(locadorExistente);
+            locador.setId(locadorExistente.getId());
+            locadores.save(locador);
             return locadorExistente;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }

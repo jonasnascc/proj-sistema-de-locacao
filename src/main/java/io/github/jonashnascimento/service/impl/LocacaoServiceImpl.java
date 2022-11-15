@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,8 +49,20 @@ public class LocacaoServiceImpl implements LocacaoService {
         return contrato;
     }
 
-    private List<Fatura> converterFatura(Contrato contrato, List<FaturaDTO> dto){
-        return null;
+    private List<Fatura> converterFatura(Contrato contrato, List<FaturaDTO> items){
+        if(items.isEmpty())
+            throw new RegraNegocioException("Não é possível realizar uma Locação.");
+
+
+
+        return items.stream().map(dto -> {
+            Fatura fatura = new Fatura();
+            fatura.setContrato(contrato);
+            fatura.setValor(contrato.getValorFaturas());
+            fatura.setParcelaReferencia(dto.getParcelaReferencia());
+            fatura.setPagamentoEfetuado(dto.isPagamentoEfetuado());
+            return fatura;
+        }).collect(Collectors.toList());
     }
 
 

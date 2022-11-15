@@ -15,6 +15,6 @@ import java.util.List;
 public class Locador extends Usuario{
     @JsonIgnore
     @OneToMany(mappedBy = "locador")
-    private List<ObjetoLocado> objetosLocados;
+    private List<Locacao> objetosLocados;
 
 }

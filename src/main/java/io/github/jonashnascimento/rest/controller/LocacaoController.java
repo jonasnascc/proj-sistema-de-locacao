@@ -1,16 +1,15 @@
 package io.github.jonashnascimento.rest.controller;
 
-
-import io.github.jonashnascimento.service.ObjetoService;
+import io.github.jonashnascimento.service.LocacaoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/objetos")
-public class ObjetoController {
-    private ObjetoService service;
+@RequestMapping("/api/locacoes")
+public class LocacaoController {
+    private LocacaoService service;
 
-    public ObjetoController(ObjetoService service){
+    public LocacaoController(LocacaoService service) {
         this.service = service;
     }
 }

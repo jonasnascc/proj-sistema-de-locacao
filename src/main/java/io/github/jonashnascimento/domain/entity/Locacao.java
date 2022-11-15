@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ObjetoLocado {
+public class Locacao {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -17,6 +17,10 @@ public class ObjetoLocado {
     @ManyToOne
     @JoinColumn(name = "locador")
     private Locador locador;
+
+    @ManyToOne
+    @JoinColumn(name="locatario")
+    private Locatario locatario;
 
     @OneToOne
     @JoinColumn(name = "objeto_id")

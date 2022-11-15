@@ -26,7 +26,7 @@ public class Contrato {
     private Integer intervaloDias;
 
     @OneToOne(mappedBy = "contrato")
-    private ObjetoLocado objetoLocado;
+    private Locacao locacao;
 
     @OneToMany(mappedBy = "contrato")
     private List<Fatura> faturas;

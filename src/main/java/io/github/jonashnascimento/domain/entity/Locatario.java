@@ -8,12 +8,16 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class Locatario extends Usuario{
     @JsonIgnore
     @OneToMany(mappedBy = "dono")
     private List<Objeto> objetosProprios;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "locatario")
+    private List<Locacao> locacoes;
 
 }

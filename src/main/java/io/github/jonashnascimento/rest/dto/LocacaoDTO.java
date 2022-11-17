@@ -13,5 +13,4 @@ public class LocacaoDTO {
     private Integer locatario;
     private Integer objeto;
     private ContratoDTO contrato;
-
 }

@@ -1,5 +1,6 @@
 package io.github.jonashnascimento.domain.entity;
 
+import io.github.jonashnascimento.domain.enums.StatusObjeto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,5 +26,9 @@ public class Objeto {
 
     @Column(length = 170)
     private String caracteristicas;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusObjeto status;
 
 }

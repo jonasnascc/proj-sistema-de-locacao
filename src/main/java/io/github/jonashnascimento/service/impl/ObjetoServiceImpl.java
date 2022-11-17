@@ -3,6 +3,7 @@ package io.github.jonashnascimento.service.impl;
 
 import io.github.jonashnascimento.domain.entity.Objeto;
 import io.github.jonashnascimento.domain.entity.Tipo;
+import io.github.jonashnascimento.domain.enums.StatusObjeto;
 import io.github.jonashnascimento.domain.repository.LocatarioRepository;
 import io.github.jonashnascimento.domain.repository.ObjetoRepository;
 import io.github.jonashnascimento.domain.repository.TipoRepository;
@@ -27,6 +28,7 @@ public class ObjetoServiceImpl implements ObjetoService {
         objeto.setDono(locatarioRepository.findById(dto.getDono()).orElseThrow(() -> new RegraNegocioException("Falha ao Encontrar Locatário.")));
         objeto.setNome(dto.getNome());
         objeto.setCaracteristicas(dto.getCaracteristicas());
+        objeto.setStatus(StatusObjeto.NAO_LOCADO);
 
         Tipo tipo = converterTipo(dto.getTipo());
         try{

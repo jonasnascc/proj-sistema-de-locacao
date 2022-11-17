@@ -13,5 +13,5 @@ import java.util.Date;
 public class FaturaDTO {
     //private Date data;
     private Integer parcelaReferencia;
-    private boolean pagamentoEfetuado;
+    private boolean statusFatura;
 }

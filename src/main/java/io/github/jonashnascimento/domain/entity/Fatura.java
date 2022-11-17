@@ -29,6 +29,6 @@ public class Fatura {
     @JoinColumn(name="contrato_id")
     private Contrato contrato;
 
-    @Column(name = "pagamento_efetuado")
-    private boolean pagamentoEfetuado;
+    @Column(name = "statusFatura")
+    private boolean statusFatura;
 }

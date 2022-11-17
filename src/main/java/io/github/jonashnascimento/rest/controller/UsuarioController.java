@@ -3,10 +3,12 @@ package io.github.jonashnascimento.rest.controller;
 import io.github.jonashnascimento.domain.entity.Locador;
 import io.github.jonashnascimento.domain.entity.Locatario;
 import io.github.jonashnascimento.domain.entity.Usuario;
+import io.github.jonashnascimento.domain.repository.LocadorRepository;
 import io.github.jonashnascimento.domain.repository.UsuarioRepository;
 import io.github.jonashnascimento.rest.dto.InfoUsuarioDTO;
 import io.github.jonashnascimento.rest.dto.UsuarioDTO;
 import io.github.jonashnascimento.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -23,15 +25,13 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
     private final UsuarioRepository usuarios;
 
     private final UsuarioService service;
 
-    public UsuarioController(UsuarioRepository usuarios, UsuarioService service){
-        this.usuarios = usuarios;
-        this.service = service;
-    }
+    private final LocadorRepository locadores;
 
     @GetMapping("{id}")
     public Usuario getUsuarioById(@PathVariable("id") Integer id){
@@ -71,15 +71,7 @@ public class UsuarioController {
         return converter(all);
     }
 
-    /*@GetMapping
-    public List<InfoUsuarioDTO> find(Usuario filtro){
-        ExampleMatcher matcher = ExampleMatcher
-                .matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
-        Example<Usuario> example = Example.of(filtro, matcher);
-
-        return converter(usuarios.findAll(example));
-    }*/
 
     private List<InfoUsuarioDTO> converter(List<Usuario> users){
         if(CollectionUtils.isEmpty(users)) return Collections.emptyList();

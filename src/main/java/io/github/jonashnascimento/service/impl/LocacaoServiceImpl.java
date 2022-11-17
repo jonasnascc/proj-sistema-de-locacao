@@ -1,6 +1,7 @@
 package io.github.jonashnascimento.service.impl;
 
 import io.github.jonashnascimento.domain.entity.*;
+import io.github.jonashnascimento.domain.enums.StatusObjeto;
 import io.github.jonashnascimento.domain.repository.*;
 import io.github.jonashnascimento.exception.RegraNegocioException;
 import io.github.jonashnascimento.rest.dto.ContratoDTO;
@@ -36,7 +37,11 @@ public class LocacaoServiceImpl implements LocacaoService {
 
         locacao.setLocador(locador);
         locacao.setLocatario(locatario);
-        locacao.setObjeto(objetoRepository.findById(dto.getObjeto()).orElseThrow(() -> new RegraNegocioException("Código de objeto não encontrado.")));
+
+        Objeto objeto = objetoRepository.findById(dto.getObjeto()).orElseThrow(() -> new RegraNegocioException("Código de objeto não encontrado."));
+        objeto.setStatus(StatusObjeto.LOCADO);
+        locacao.setObjeto(objeto);
+        objetoRepository.save(objeto);
 
         Contrato contrato = converterContrato(locacao, dto.getContrato());
         repository.save(locacao);
@@ -75,7 +80,7 @@ public class LocacaoServiceImpl implements LocacaoService {
             fatura.setContrato(contrato);
             fatura.setValor(contrato.getValorFaturas());
             fatura.setParcelaReferencia(dto.getParcelaReferencia());
-            fatura.setPagamentoEfetuado(dto.isPagamentoEfetuado());
+            fatura.setStatusFatura(dto.isStatusFatura());
             return fatura;
         }).collect(Collectors.toList());
     }

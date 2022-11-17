@@ -4,6 +4,7 @@ import io.github.jonashnascimento.domain.entity.Locacao;
 import io.github.jonashnascimento.rest.dto.InfoLocacaoDTO;
 import io.github.jonashnascimento.rest.dto.LocacaoDTO;
 import io.github.jonashnascimento.service.LocacaoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,7 +27,6 @@ public class LocacaoController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
     public InfoLocacaoDTO getById(@PathVariable Integer id){
         return service.obterLocacaoCompleta(id).map(this::converter).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Locacao não encontrada."));
     }

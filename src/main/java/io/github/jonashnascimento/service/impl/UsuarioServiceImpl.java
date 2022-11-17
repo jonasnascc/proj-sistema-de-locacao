@@ -1,16 +1,15 @@
 package io.github.jonashnascimento.service.impl;
 
-import io.github.jonashnascimento.domain.entity.Locador;
-import io.github.jonashnascimento.domain.entity.Locatario;
 import io.github.jonashnascimento.domain.entity.Usuario;
-import io.github.jonashnascimento.domain.repository.LocadorRepository;
 import io.github.jonashnascimento.domain.repository.UsuarioRepository;
-import io.github.jonashnascimento.exception.RegraNegocioException;
 import io.github.jonashnascimento.rest.dto.UsuarioDTO;
 import io.github.jonashnascimento.service.UsuarioService;
 import lombok.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario save(UsuarioDTO dto) {
-        Usuario usuario = validaUsuario(dto.getTipoUsuario());
+        Usuario usuario = new Usuario();
 
         usuario.setNome(dto.getNome());
         usuario.setCpf(dto.getCpf());
@@ -31,18 +30,27 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuario;
     }
 
-    private Usuario validaUsuario(String tipoUsuario){
-        Usuario usuario = switch (tipoUsuario) {
-            case "locador" -> new Locador();
-            case "locatario" -> new Locatario();
-            default -> null;
-        };
-
-        if(usuario == null) {
-            throw new RegraNegocioException("Tipo de usuário inválido.");
-        }
-
-        return usuario;
+    @Override
+    public void update(Integer id, Usuario usuario) {
+        repository.findById(id).map(locadorExistente -> {
+            usuario.setId(locadorExistente.getId());
+            repository.save(usuario);
+            return usuario;
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
+
+    @Override
+    public void delete(Integer id) {
+        repository.findById(id).map(usuario -> {
+            repository.delete(usuario);
+            return usuario;
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+    }
+
+    @Override
+    public Optional<Usuario> getById(Integer id) {
+        return repository.findById(id);
+    }
+
 
 }

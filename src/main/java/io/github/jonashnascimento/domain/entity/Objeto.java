@@ -16,13 +16,14 @@ public class Objeto {
     private Integer id;
 
     @ManyToOne
-    private Locatario dono;
+    private Usuario dono;
 
     @Column(nullable = false, length = 30)
     private String nome;
 
     @ManyToOne
-    private Tipo tipo;
+    @JoinColumn(name = "tipo")
+    private TipoObjeto tipo;
 
     @Column(length = 170)
     private String caracteristicas;

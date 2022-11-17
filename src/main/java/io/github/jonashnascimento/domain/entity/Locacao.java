@@ -16,11 +16,11 @@ public class Locacao {
 
     @ManyToOne
     @JoinColumn(name = "locador")
-    private Locador locador;
+    private Usuario locador;
 
     @ManyToOne
     @JoinColumn(name="locatario")
-    private Locatario locatario;
+    private Usuario locatario;
 
     @OneToOne
     @JoinColumn(name = "objeto_id")

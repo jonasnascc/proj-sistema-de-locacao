@@ -1,5 +1,6 @@
 package io.github.jonashnascimento.domain.entity;
 
+import io.github.jonashnascimento.domain.enums.StatusPagamento;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Fatura {
+public class Pagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -29,6 +30,7 @@ public class Fatura {
     @JoinColumn(name="contrato_id")
     private Contrato contrato;
 
-    @Column(name = "statusFatura")
-    private boolean statusFatura;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusPagamento status;
 }

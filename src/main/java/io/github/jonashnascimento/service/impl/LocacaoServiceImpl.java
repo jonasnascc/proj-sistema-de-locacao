@@ -2,10 +2,11 @@ package io.github.jonashnascimento.service.impl;
 
 import io.github.jonashnascimento.domain.entity.*;
 import io.github.jonashnascimento.domain.enums.StatusObjeto;
+import io.github.jonashnascimento.domain.enums.StatusPagamento;
 import io.github.jonashnascimento.domain.repository.*;
 import io.github.jonashnascimento.exception.RegraNegocioException;
 import io.github.jonashnascimento.rest.dto.ContratoDTO;
-import io.github.jonashnascimento.rest.dto.FaturaDTO;
+import io.github.jonashnascimento.rest.dto.PagamentoDTO;
 import io.github.jonashnascimento.rest.dto.LocacaoDTO;
 import io.github.jonashnascimento.service.LocacaoService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,10 @@ import java.util.stream.Collectors;
 public class LocacaoServiceImpl implements LocacaoService {
 
     private final LocacaoRepository repository;
+
+    private final UsuarioRepository usuarioRepository;
     private final ContratoRepository contratoRepository;
     private final ObjetoRepository objetoRepository;
-    private final LocadorRepository locadorRepository;
-    private final LocatarioRepository locatarioRepository;
     private final FaturaRepository faturaRepository;
 
     @Override
@@ -32,8 +33,8 @@ public class LocacaoServiceImpl implements LocacaoService {
     public Locacao salvar(LocacaoDTO dto) {
         Locacao locacao = new Locacao();
 
-        Locador locador = locadorRepository.findById(dto.getLocador()).orElseThrow(() -> new RegraNegocioException("Código de locador inválido"));
-        Locatario locatario = locatarioRepository.findById(dto.getLocatario()).orElseThrow(() -> new RegraNegocioException("Código de locador inválido"));
+        Usuario locador = usuarioRepository.findById(dto.getLocador()).orElseThrow(() -> new RegraNegocioException("Código de locador inválido"));
+        Usuario locatario = usuarioRepository.findById(dto.getLocatario()).orElseThrow(() -> new RegraNegocioException("Código de locatario inválido"));
 
         locacao.setLocador(locador);
         locacao.setLocatario(locatario);
@@ -56,31 +57,41 @@ public class LocacaoServiceImpl implements LocacaoService {
         return repository.findByIdFetchContratoFetchObjeto(id);
     }
 
+    @Override
+    public Locacao update(LocacaoDTO dto) {
+        return null;
+    }
+
+    @Override
+    public Locacao delete(LocacaoDTO dto) {
+        return null;
+    }
+
     private Contrato converterContrato(Locacao locacao, ContratoDTO dto){
         Contrato contrato = new Contrato();
 
         contrato.setLocacao(locacao);
-        contrato.setN_faturas(dto.getN_faturas());
-        contrato.setValorFaturas(dto.getValorFaturas());
+        contrato.setNumPagamentos(dto.getNumPagamentos());
+        contrato.setValorPagamentos(dto.getValorPagamentos());
         contrato.setIntervaloDias(dto.getIntervaloDias());
 
-        List<Fatura> faturas = converterFatura(contrato, dto.getFaturas());
+        List<Pagamento> faturas = converterFatura(contrato, dto.getPagamentos());
 
         faturaRepository.saveAll(faturas);
-        contrato.setFaturas(faturas);
+        contrato.setPagamentos(faturas);
         return contrato;
     }
 
-    private List<Fatura> converterFatura(Contrato contrato, List<FaturaDTO> items){
+    private List<Pagamento> converterFatura(Contrato contrato, List<PagamentoDTO> items){
         if(items.isEmpty())
             throw new RegraNegocioException("Não é possível realizar uma Locação.");
 
         return items.stream().map(dto -> {
-            Fatura fatura = new Fatura();
+            Pagamento fatura = new Pagamento();
             fatura.setContrato(contrato);
-            fatura.setValor(contrato.getValorFaturas());
+            fatura.setValor(contrato.getValorPagamentos());
             fatura.setParcelaReferencia(dto.getParcelaReferencia());
-            fatura.setStatusFatura(dto.isStatusFatura());
+            fatura.setStatus(StatusPagamento.valueOf(dto.getStatus()));
             return fatura;
         }).collect(Collectors.toList());
     }

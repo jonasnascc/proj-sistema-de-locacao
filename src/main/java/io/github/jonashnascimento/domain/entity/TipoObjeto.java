@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Tipo {
+public class TipoObjeto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,7 +20,7 @@ public class Tipo {
     private String nome;
 
     @ManyToOne
-    private Locatario criador;
+    private Usuario criador;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tipo")

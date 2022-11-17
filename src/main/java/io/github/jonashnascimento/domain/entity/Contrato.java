@@ -17,10 +17,10 @@ public class Contrato {
     private Integer id;
 
     @Column(nullable = false, updatable = false)
-    private Integer n_faturas;
+    private Integer numPagamentos;
 
     @Column(nullable = false, updatable = false)
-    private BigDecimal valorFaturas;
+    private BigDecimal valorPagamentos;
 
     @Column(nullable = false, updatable = false)
     private Integer intervaloDias;
@@ -29,6 +29,6 @@ public class Contrato {
     private Locacao locacao;
 
     @OneToMany(mappedBy = "contrato")
-    private List<Fatura> faturas;
+    private List<Pagamento> pagamentos;
 
 }

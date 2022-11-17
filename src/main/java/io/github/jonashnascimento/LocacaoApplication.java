@@ -1,6 +1,6 @@
 package io.github.jonashnascimento;
 
-import io.github.jonashnascimento.domain.entity.Tipo;
+import io.github.jonashnascimento.domain.entity.TipoObjeto;
 import io.github.jonashnascimento.domain.repository.ObjetoRepository;
 import io.github.jonashnascimento.domain.repository.TipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class LocacaoApplication {
     @Bean
     public CommandLineRunner init(@Autowired ObjetoRepository objRepository, @Autowired TipoRepository tipoRepository){
         return args -> {
-            Tipo carro = new Tipo();
+            TipoObjeto carro = new TipoObjeto();
         };
     }
 

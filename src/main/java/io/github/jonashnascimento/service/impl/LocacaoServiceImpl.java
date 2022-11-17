@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +44,11 @@ public class LocacaoServiceImpl implements LocacaoService {
 
         locacao.setContrato(contrato);
         return locacao;
+    }
+
+    @Override
+    public Optional<Locacao> obterLocacaoCompleta(Integer id) {
+        return repository.findByIdFetchContratoFetchObjeto(id);
     }
 
     private Contrato converterContrato(Locacao locacao, ContratoDTO dto){

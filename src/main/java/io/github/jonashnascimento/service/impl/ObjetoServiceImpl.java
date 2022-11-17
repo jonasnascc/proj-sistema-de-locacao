@@ -29,7 +29,11 @@ public class ObjetoServiceImpl implements ObjetoService {
         objeto.setCaracteristicas(dto.getCaracteristicas());
 
         Tipo tipo = converterTipo(dto.getTipo());
-        tipoRepository.save(tipo);
+        try{
+            tipoRepository.save(tipo);
+        } catch (Exception e){
+            throw new RegraNegocioException("Erro ao definir o tipo de objeto. ( tipo duplicado)");
+        }
 
         objeto.setTipo(tipo);
 

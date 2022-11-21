@@ -2,7 +2,6 @@ package io.github.jonashnascimento.service.impl;
 
 import io.github.jonashnascimento.domain.entity.Usuario;
 import io.github.jonashnascimento.domain.repository.UsuarioRepository;
-import io.github.jonashnascimento.rest.dto.UsuarioDTO;
 import io.github.jonashnascimento.service.UsuarioService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -18,15 +17,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository repository;
 
     @Override
-    public Usuario save(UsuarioDTO dto) {
-        Usuario usuario = new Usuario();
-
-        usuario.setNome(dto.getNome());
-        usuario.setCpf(dto.getCpf());
-        usuario.setTelefone(dto.getTelefone());
-
+    public Usuario save(Usuario usuario) {
         repository.save(usuario);
-
         return usuario;
     }
 

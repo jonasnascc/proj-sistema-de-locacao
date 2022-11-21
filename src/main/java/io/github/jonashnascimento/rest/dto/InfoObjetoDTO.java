@@ -9,8 +9,10 @@ import lombok.Data;
 @Builder
 public class InfoObjetoDTO {
     private Integer codigo;
-    private String status;
-    private String nome;
+    private String descricao;
     private String tipo;
     private String caracteristicas;
+    private String dono;
+    private Integer donoId;
+    private String status;
 }

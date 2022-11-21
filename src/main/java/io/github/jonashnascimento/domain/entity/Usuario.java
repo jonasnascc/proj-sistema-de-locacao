@@ -2,8 +2,11 @@ package io.github.jonashnascimento.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -15,10 +18,14 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false, length = 60)
+    @Column
+    @NotEmpty(message = "Campo nome é obrigatório.")
+    @Length(max = 50, message = "O nome de usuário precisa ter no máximo 50 caracteres.")
     private String nome;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(unique = true)
+    @NotEmpty(message = "Campo CPF é obrigatório.")
+    @CPF(message = "Informe um CPF válido.")
     private String cpf;
 
     @Column(nullable = false, length = 13)

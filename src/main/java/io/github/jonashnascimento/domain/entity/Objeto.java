@@ -19,7 +19,7 @@ public class Objeto {
     private Usuario dono;
 
     @Column(nullable = false, length = 30)
-    private String nome;
+    private String descricao;
 
     @ManyToOne
     @JoinColumn(name = "tipo")

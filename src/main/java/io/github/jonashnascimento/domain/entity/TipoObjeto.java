@@ -26,4 +26,9 @@ public class TipoObjeto {
     @OneToMany(mappedBy = "tipo")
     private List<Objeto> objetos;
 
+    public TipoObjeto(String nome, Usuario criador){
+        this.nome = nome;
+        this.criador = criador;
+    }
+
 }

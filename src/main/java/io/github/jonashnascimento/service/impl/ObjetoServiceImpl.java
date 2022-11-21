@@ -11,7 +11,6 @@ import io.github.jonashnascimento.domain.repository.UsuarioRepository;
 import io.github.jonashnascimento.exception.ObjetoNaoEncontradoException;
 import io.github.jonashnascimento.exception.RegraNegocioException;
 import io.github.jonashnascimento.rest.dto.ObjetoDTO;
-import io.github.jonashnascimento.rest.dto.TipoDTO;
 import io.github.jonashnascimento.service.ObjetoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,16 +30,12 @@ public class ObjetoServiceImpl implements ObjetoService {
         Usuario dono = usuarioRepository.findById(dto.getDono()).orElseThrow(() -> new RegraNegocioException("Falha ao Encontrar Usuário."));
 
         objeto.setDono(dono);
-        objeto.setNome(dto.getNome());
+        objeto.setDescricao(dto.getDescricao());
         objeto.setCaracteristicas(dto.getCaracteristicas());
         objeto.setStatus(StatusObjeto.NAO_LOCADO);
 
-        TipoObjeto tipoObjeto = converterTipo(dto.getTipo());
-        try{
-            tipoRepository.save(tipoObjeto);
-        } catch (Exception e){
-            throw new RegraNegocioException("Erro ao definir o tipo de objeto. (tipo duplicado)");
-        }
+        TipoObjeto tipoObjeto = validarTipo(dto.getTipo(), dono.getId());
+        tipoRepository.save(tipoObjeto);
 
         objeto.setTipo(tipoObjeto);
 
@@ -72,10 +67,8 @@ public class ObjetoServiceImpl implements ObjetoService {
         }).orElseThrow(ObjetoNaoEncontradoException::new);
     }
 
-    private TipoObjeto converterTipo(TipoDTO dto){
-        TipoObjeto tipoObjeto = new TipoObjeto();
-        tipoObjeto.setCriador(usuarioRepository.findById(dto.getCriador()).orElseThrow(() -> new RegraNegocioException("Falha ao Encontrar Usuario.")));
-        tipoObjeto.setNome(dto.getNome());
-        return tipoObjeto;
+    private TipoObjeto validarTipo(String nome, Integer donoId){
+        return tipoRepository.findByNome(nome).orElse(new TipoObjeto(nome,
+                        usuarioRepository.findById(donoId).orElseThrow(() -> new RegraNegocioException("Codigo de usuário inválido."))));
     }
 }

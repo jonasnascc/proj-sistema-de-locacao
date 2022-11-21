@@ -1,10 +1,10 @@
 package io.github.jonashnascimento.rest.controller;
 
-import io.github.jonashnascimento.domain.entity.Locacao;
 import io.github.jonashnascimento.domain.entity.Objeto;
 import io.github.jonashnascimento.domain.enums.StatusObjeto;
 import io.github.jonashnascimento.domain.repository.ObjetoRepository;
 import io.github.jonashnascimento.rest.dto.AtualizarObjetoStatusDTO;
+import io.github.jonashnascimento.rest.dto.InfoObjetoDTO;
 import io.github.jonashnascimento.rest.dto.ObjetoDTO;
 import io.github.jonashnascimento.service.ObjetoService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -40,7 +41,7 @@ public class ObjetoController {
 
 
     @GetMapping
-    public List<Objeto> find(Objeto filtro){
+    public List<InfoObjetoDTO> find(Objeto filtro){
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
@@ -48,6 +49,19 @@ public class ObjetoController {
 
         Example<Objeto> example = Example.of(filtro, matcher);
 
-        return objetos.findAll(example);
+        return converter(objetos.findAll(example));
+    }
+
+    private List<InfoObjetoDTO> converter(List<Objeto> objetos){
+        return objetos.stream().map(o -> InfoObjetoDTO.builder()
+                .codigo(o.getId())
+                .descricao(o.getDescricao())
+                .caracteristicas(o.getCaracteristicas())
+                .status(o.getStatus().name())
+                .tipo(o.getTipo().getNome())
+                .dono(o.getDono().getNome())
+                .donoId(o.getDono().getId())
+                .build()).collect(Collectors.toList());
+
     }
 }

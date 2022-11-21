@@ -1,7 +1,6 @@
 package io.github.jonashnascimento.rest.controller;
 
 import io.github.jonashnascimento.domain.entity.Locacao;
-import io.github.jonashnascimento.domain.entity.Usuario;
 import io.github.jonashnascimento.domain.repository.LocacaoRepository;
 import io.github.jonashnascimento.rest.dto.InfoLocacaoDTO;
 import io.github.jonashnascimento.rest.dto.LocacaoDTO;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -25,7 +25,7 @@ public class LocacaoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody LocacaoDTO dto){
+    public Integer save(@RequestBody @Valid LocacaoDTO dto){
         Locacao locacao = service.salvar(dto);
         return locacao.getId();
     }
@@ -71,7 +71,7 @@ public class LocacaoController {
                 .valorLocacao(locacao.getContrato().getValorPagamentos())
                 .numeroParcelas(locacao.getContrato().getNumPagamentos())
                 .intervaloDias(locacao.getContrato().getIntervaloDias())
-                .nomeObjeto(locacao.getObjeto().getNome())
+                .nomeObjeto(locacao.getObjeto().getDescricao())
                 .tipoObjeto(locacao.getObjeto().getTipo().getNome())
                 .caracteristicasObjeto(locacao.getObjeto().getCaracteristicas())
                 .build();

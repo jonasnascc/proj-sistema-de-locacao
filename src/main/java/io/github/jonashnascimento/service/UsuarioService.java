@@ -1,12 +1,11 @@
 package io.github.jonashnascimento.service;
 
 import io.github.jonashnascimento.domain.entity.Usuario;
-import io.github.jonashnascimento.rest.dto.UsuarioDTO;
 
 import java.util.Optional;
 
 public interface UsuarioService {
-    Usuario save(UsuarioDTO dto);
+    Usuario save(Usuario usuario);
 
     void update(Integer id, Usuario usuario);
 

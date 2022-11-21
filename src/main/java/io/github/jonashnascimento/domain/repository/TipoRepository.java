@@ -13,8 +13,10 @@ import java.util.Optional;
 public interface TipoRepository extends JpaRepository<TipoObjeto, Integer> {
     List<TipoObjeto> findTipoByCriador(Usuario usuario);
 
-    Optional<TipoObjeto> searchByNome(String nome);
 
-    @Query(value = "select t from TipoObjeto t left join fetch t.objetos o where t.id =: id")
+    Optional<TipoObjeto> findByNome(String nome);
+
+    @Query(value = "select t from TipoObjeto t left join fetch t.objetos o where t.id = :id")
     Optional<TipoObjeto> findTipoFetchObjetos(@Param("id") Integer id);
+
 }

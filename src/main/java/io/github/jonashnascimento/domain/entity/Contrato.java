@@ -16,13 +16,13 @@ public class Contrato {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false, updatable = false)
+    @Column
     private Integer numPagamentos;
 
-    @Column(nullable = false, updatable = false)
+    @Column
     private BigDecimal valorPagamentos;
 
-    @Column(nullable = false, updatable = false)
+    @Column
     private Integer intervaloDias;
 
     @OneToOne(mappedBy = "contrato")

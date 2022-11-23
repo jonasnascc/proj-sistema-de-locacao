@@ -5,12 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocacaoDTO {
-    private Integer locador;
-    private Integer locatario;
-    private Integer objeto;
+    @NotNull(message = "{campo.contrato.obrigatorio}")
     private ContratoDTO contrato;
+
+    @NotNull(message = "{campo.objeto.obrigatorio}")
+    private Integer objeto;
+
+    @NotNull(message = "{campo.locador.obrigatorio}")
+    private Integer locador;
+
+    @NotNull(message = "{campo.locatario.obrigatorio}")
+    private Integer locatario;
 }

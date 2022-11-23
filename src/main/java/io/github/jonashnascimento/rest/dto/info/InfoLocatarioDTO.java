@@ -1,6 +1,5 @@
-package io.github.jonashnascimento.rest.dto;
+package io.github.jonashnascimento.rest.dto.info;
 
-import io.github.jonashnascimento.domain.entity.Objeto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

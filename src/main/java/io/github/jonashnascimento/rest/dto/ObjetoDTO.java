@@ -1,28 +1,28 @@
 package io.github.jonashnascimento.rest.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ObjetoDTO {
-    @NotEmpty(message = "O campo dono é obrigatório.")
+    @NotNull(message = "{campo.dono.obrigatorio}")
     private Integer dono;
 
-    @NotEmpty(message = "O campo descricao é obrigatório.")
-    @Length(max = 60, message = "O campo descricao deve ter no máximo 60 caracteres.")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
+    @Size(max = 60, message = "{campo.descricao.tamanho-maximo}")
     private String descricao;
 
-    @NotEmpty(message = "O campo caracteristicas é obrigatório.")
-    @Length(max = 130, message = "O campo caracteristicas deve ter no márximo 130 caracteres.")
+    @NotEmpty(message = "{campo.caracteristicas.obrigatorio}")
+    @Size(max = 130, message = "{campo.caracteristicas.tamanho-maximo}")
     private String caracteristicas;
 
-    @NotEmpty(message = "O campo tipo deve ser obrigatório.")
+    @NotEmpty(message = "{campo.tipo.obrigatorio}")
     private String tipo;
 }

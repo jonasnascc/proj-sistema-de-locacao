@@ -13,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,17 +87,36 @@ public class LocacaoServiceImpl implements LocacaoService {
     }
 
     private List<Pagamento> converterFatura(Contrato contrato, List<PagamentoDTO> items){
+        if(items == null) return Collections.emptyList();
+
         if(items.isEmpty())
             throw new RegraNegocioException("Não é possível realizar uma Locação.");
 
         return items.stream().map(dto -> {
-            Pagamento fatura = new Pagamento();
-            fatura.setContrato(contrato);
-            fatura.setValor(contrato.getValorPagamentos());
-            fatura.setParcelaReferencia(dto.getParcelaReferencia());
-            fatura.setStatus(StatusPagamento.valueOf(dto.getStatus()));
-            return fatura;
+            Pagamento pagamento = new Pagamento();
+            pagamento.setContrato(contrato);
+            pagamento.setValor(contrato.getValorPagamentos());
+            pagamento.setParcelaReferencia(dto.getParcelaReferencia());
+            pagamento.setData(converterData(dto.getData()));
+            pagamento.setStatus(converterStatusPagamento(dto.getStatus()));
+            return pagamento;
         }).collect(Collectors.toList());
+    }
+
+    private Date converterData(String data){
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").parse(data);
+        } catch (ParseException e){
+            throw new RegraNegocioException("Formato de data inválido.");
+        }
+    }
+
+    private StatusPagamento converterStatusPagamento(String status){
+        try {
+            return StatusPagamento.valueOf(status);
+        } catch (IllegalArgumentException e){
+            throw new RegraNegocioException("Status de pagamento inválido.");
+        }
     }
 
 

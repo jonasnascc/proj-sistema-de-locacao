@@ -2,7 +2,7 @@ package io.github.jonashnascimento.rest.controller;
 
 import io.github.jonashnascimento.domain.entity.Locacao;
 import io.github.jonashnascimento.domain.repository.LocacaoRepository;
-import io.github.jonashnascimento.rest.dto.InfoLocacaoDTO;
+import io.github.jonashnascimento.rest.dto.info.InfoLocacaoDTO;
 import io.github.jonashnascimento.rest.dto.LocacaoDTO;
 import io.github.jonashnascimento.service.LocacaoService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class LocacaoController {
 
     @PutMapping
     @ResponseStatus(NO_CONTENT)
-    public Integer update(@RequestBody LocacaoDTO dto){
+    public Integer update(@RequestBody @Valid LocacaoDTO dto){
         Locacao locacao = service.update(dto);
         return locacao.getId();
     }

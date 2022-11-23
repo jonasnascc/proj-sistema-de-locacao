@@ -1,4 +1,4 @@
-package io.github.jonashnascimento.rest.dto;
+package io.github.jonashnascimento.rest.dto.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

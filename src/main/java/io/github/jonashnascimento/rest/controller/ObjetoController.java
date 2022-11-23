@@ -4,7 +4,7 @@ import io.github.jonashnascimento.domain.entity.Objeto;
 import io.github.jonashnascimento.domain.enums.StatusObjeto;
 import io.github.jonashnascimento.domain.repository.ObjetoRepository;
 import io.github.jonashnascimento.rest.dto.AtualizarObjetoStatusDTO;
-import io.github.jonashnascimento.rest.dto.InfoObjetoDTO;
+import io.github.jonashnascimento.rest.dto.info.InfoObjetoDTO;
 import io.github.jonashnascimento.rest.dto.ObjetoDTO;
 import io.github.jonashnascimento.service.ObjetoService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class ObjetoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody ObjetoDTO dto){
+    public Integer save(@RequestBody @Valid ObjetoDTO dto){
         Objeto objeto = service.save(dto);
         return objeto.getId();
     }
